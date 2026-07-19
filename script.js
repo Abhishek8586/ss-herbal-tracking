@@ -1,24 +1,52 @@
-function trackParcel(){
+async function trackParcel() {
 
-    let awb = document.getElementById("awb").value;
+    const awb = document.getElementById("awb").value.trim();
 
-    let result = document.getElementById("result");
+    const result = document.getElementById("result");
 
-    if(awb=="45993612345678"){
+    if (!awb) {
+        result.innerHTML = "<span style='color:red'>Please enter AWB Number</span>";
+        return;
+    }
 
-        result.innerHTML=`
-        <br>
-        <b>Customer :</b> Rahul Sharma<br><br>
+    result.innerHTML = "Searching...";
 
-        <b>Courier :</b> Delhivery<br><br>
+    try {
 
-        <b>Status :</b>
-        <span style="color:green;">In Transit</span>
-        `;
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwOs4bKMnR-6tPvdq0eTQMW0EFCpNS9kQhoMHtRlPo2-clai-f2R8AmcgtXUOLPuQiOeQ/exec?awb=" + encodeURIComponent(awb));
 
-    }else{
+        const data = await response.json();
 
-        result.innerHTML="<span style='color:red'>AWB Not Found</span>";
+        if (data.error) {
+
+            result.innerHTML = "<span style='color:red'>AWB Not Found</span>";
+
+        } else {
+
+            result.innerHTML = `
+                <div style="text-align:left;margin-top:20px">
+                <b>AWB :</b> ${data.awb}<br><br>
+
+                <b>Customer :</b> ${data.customer}<br><br>
+
+                <b>Mobile :</b> ${data.mobile}<br><br>
+
+                <b>Courier :</b> ${data.courier}<br><br>
+
+                <b>Status :</b>
+                <span style="color:green;font-weight:bold">
+                ${data.status}
+                </span><br><br>
+
+                <b>Last Update :</b> ${data.lastUpdate}
+                </div>
+            `;
+
+        }
+
+    } catch (err) {
+
+        result.innerHTML = "<span style='color:red'>Server Error</span>";
 
     }
 
