@@ -4,7 +4,30 @@ async function trackParcel() {
     const result = document.getElementById("result");
 
     if (!awb) {
-        result.innerHTML = `
+        result.innerHTML = `const steps = [
+    "Order Confirmed",
+    "Packed",
+    "Shipped",
+    "In Transit",
+    "Out for Delivery",
+    "Delivered"
+];
+
+const currentStep = steps.indexOf(data.status);
+
+let timelineHTML = "";
+
+steps.forEach((step, index) => {
+
+    timelineHTML += `
+    <div class="timeline-step ${index <= currentStep ? 'active' : ''}">
+        ${index <= currentStep ? '✅' : '⭕'} ${step}
+    </div>
+    `;
+
+});
+
+document.getElementById("timeline").innerHTML = timelineHTML;
        result.innerHTML = `
 <div class="tracking-card">
 
