@@ -5,88 +5,56 @@ async function trackParcel() {
 
     if (!awb) {
         result.innerHTML = `
-        <div style="text-align:center;color:red;">
-            Please enter AWB Number
-        </div>`;
-        return;
-    }
+       result.innerHTML = `
+<div class="tracking-card">
 
-    result.innerHTML = `
-    <div style="text-align:center;padding:20px;">
-        🔄 Searching...
-    </div>`;
+<h2>📦 Tracking Details</h2>
 
-    try {
+<table style="width:100%;border-collapse:collapse;">
 
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwOs4bKMnR-6tPvdq0eTQMW0EFCpNS9kQhoMHtRlPo2-clai-f2R8AmcgtXUOLPuQiOeQ/exec?awb=" + encodeURIComponent(awb));
+<tr><td><b>AWB</b></td><td>${data.awb}</td></tr>
 
-        const data = await response.json();
+<tr><td><b>Order ID</b></td><td>${data.orderId}</td></tr>
 
-        if (data.error) {
+<tr><td><b>Customer</b></td><td>${data.customer}</td></tr>
 
-            result.innerHTML = `
-            <div style="text-align:center;color:red;">
-                ❌ AWB Not Found
-            </div>`;
+<tr><td><b>Mobile</b></td><td>${data.mobile}</td></tr>
 
-            return;
-        }
+<tr><td><b>Product</b></td><td>${data.product}</td></tr>
 
-        const statusColor = data.status === "Delivered"
-            ? "#16a34a"
-            : data.status === "Out for Delivery"
-            ? "#2563eb"
-            : "#f59e0b";
+<tr><td><b>Qty</b></td><td>${data.qty}</td></tr>
 
-        result.innerHTML = `
-        <h2 style="color:#0f9d58;text-align:center;margin-bottom:20px;">
-            📦 Tracking Details
-        </h2>
+<tr><td><b>Amount</b></td><td>₹ ${data.amount}</td></tr>
 
-        <table style="width:100%;border-collapse:collapse;">
-            <tr>
-                <td><b>AWB</b></td>
-                <td>${data.awb}</td>
-            </tr>
-            <tr>
-                <td><b>Customer</b></td>
-                <td>${data.customer}</td>
-            </tr>
-            <tr>
-                <td><b>Mobile</b></td>
-                <td>${data.mobile}</td>
-            </tr>
-            <tr>
-                <td><b>Courier</b></td>
-                <td>${data.courier}</td>
-            </tr>
-            <tr>
-                <td><b>Last Update</b></td>
-                <td>${data.lastUpdate}</td>
-            </tr>
-            <tr>
-                <td><b>Status</b></td>
-                <td>
-                    <span style="
-                        background:${statusColor};
-                        color:white;
-                        padding:6px 12px;
-                        border-radius:20px;
-                        font-size:14px;">
-                        ${data.status}
-                    </span>
-                </td>
-            </tr>
-        </table>
-        `;
+<tr><td><b>Payment</b></td><td>${data.payment}</td></tr>
 
-    } catch (e) {
+<tr><td><b>Courier</b></td><td>${data.courier}</td></tr>
 
-        result.innerHTML = `
-        <div style="text-align:center;color:red;">
-            ⚠ Server Error
-        </div>`;
+<tr><td><b>Current Location</b></td><td>${data.location}</td></tr>
 
-    }
+<tr><td><b>Booking Date</b></td><td>${data.bookingDate}</td></tr>
 
-}
+<tr><td><b>Last Update</b></td><td>${data.lastUpdate}</td></tr>
+
+<tr><td><b>Expected Delivery</b></td><td>${data.expectedDelivery}</td></tr>
+
+<tr><td><b>Delivery Date</b></td><td>${data.deliveryDate}</td></tr>
+
+<tr><td><b>City</b></td><td>${data.city}</td></tr>
+
+<tr><td><b>State</b></td><td>${data.state}</td></tr>
+
+<tr><td><b>Status</b></td>
+<td>
+<span style="background:#16a34a;color:#fff;padding:6px 12px;border-radius:20px;">
+${data.status}
+</span>
+</td>
+</tr>
+
+<tr><td><b>Remark</b></td><td>${data.remark}</td></tr>
+
+</table>
+
+</div>
+`;
