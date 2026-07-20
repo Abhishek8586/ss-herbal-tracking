@@ -1,83 +1,53 @@
 async function trackParcel() {
 
     const awb = document.getElementById("awb").value.trim();
+
     const result = document.getElementById("result");
 
     if (!awb) {
-        result.innerHTML = `const steps = [
-    "Order Confirmed",
-    "Packed",
-    "Shipped",
-    "In Transit",
-    "Out for Delivery",
-    "Delivered"
-];
+        result.innerHTML = "<span style='color:red'>Please enter AWB Number</span>";
+        return;
+    }
 
-const currentStep = steps.indexOf(data.status);
+    result.innerHTML = "Searching...";
 
-let timelineHTML = "";
+    try {
 
-steps.forEach((step, index) => {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwOs4bKMnR-6tPvdq0eTQMW0EFCpNS9kQhoMHtRlPo2-clai-f2R8AmcgtXUOLPuQiOeQ/exec?awb=" + encodeURIComponent(awb));
 
-    timelineHTML += `
-    <div class="timeline-step ${index <= currentStep ? 'active' : ''}">
-        ${index <= currentStep ? '✅' : '⭕'} ${step}
-    </div>
-    `;
+        const data = await response.json();
 
-});
+        if (data.error) {
 
-document.getElementById("timeline").innerHTML = timelineHTML;
-       result.innerHTML = `
-<div class="tracking-card">
+            result.innerHTML = "<span style='color:red'>AWB Not Found</span>";
 
-<h2>📦 Tracking Details</h2>
+        } else {
 
-<table style="width:100%;border-collapse:collapse;">
+            result.innerHTML = `
+                <div style="text-align:left;margin-top:20px">
+                <b>AWB :</b> ${data.awb}<br><br>
 
-<tr><td><b>AWB</b></td><td>${data.awb}</td></tr>
+                <b>Customer :</b> ${data.customer}<br><br>
 
-<tr><td><b>Order ID</b></td><td>${data.orderId}</td></tr>
+                <b>Mobile :</b> ${data.mobile}<br><br>
 
-<tr><td><b>Customer</b></td><td>${data.customer}</td></tr>
+                <b>Courier :</b> ${data.courier}<br><br>
 
-<tr><td><b>Mobile</b></td><td>${data.mobile}</td></tr>
+                <b>Status :</b>
+                <span style="color:green;font-weight:bold">
+                ${data.status}
+                </span><br><br>
 
-<tr><td><b>Product</b></td><td>${data.product}</td></tr>
+                <b>Last Update :</b> ${data.lastUpdate}
+                </div>
+            `;
 
-<tr><td><b>Qty</b></td><td>${data.qty}</td></tr>
+        }
 
-<tr><td><b>Amount</b></td><td>₹ ${data.amount}</td></tr>
+    } catch (err) {
 
-<tr><td><b>Payment</b></td><td>${data.payment}</td></tr>
+        result.innerHTML = "<span style='color:red'>Server Error</span>";
 
-<tr><td><b>Courier</b></td><td>${data.courier}</td></tr>
+    }
 
-<tr><td><b>Current Location</b></td><td>${data.location}</td></tr>
-
-<tr><td><b>Booking Date</b></td><td>${data.bookingDate}</td></tr>
-
-<tr><td><b>Last Update</b></td><td>${data.lastUpdate}</td></tr>
-
-<tr><td><b>Expected Delivery</b></td><td>${data.expectedDelivery}</td></tr>
-
-<tr><td><b>Delivery Date</b></td><td>${data.deliveryDate}</td></tr>
-
-<tr><td><b>City</b></td><td>${data.city}</td></tr>
-
-<tr><td><b>State</b></td><td>${data.state}</td></tr>
-
-<tr><td><b>Status</b></td>
-<td>
-<span style="background:#16a34a;color:#fff;padding:6px 12px;border-radius:20px;">
-${data.status}
-</span>
-</td>
-</tr>
-
-<tr><td><b>Remark</b></td><td>${data.remark}</td></tr>
-
-</table>
-
-</div>
-`;
+}
