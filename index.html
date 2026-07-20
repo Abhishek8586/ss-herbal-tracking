@@ -3,29 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SS Herbal India Tracking</title>
+<title>SS Herbal India - Track Your Parcel</title>
 
 <link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<div class="container">
+<header class="header">
+    <h1>🌿 SS Herbal India</h1>
+    <p>Track Your Shipment Easily</p>
+</header>
 
-<h1>🌿 SS Herbal India</h1>
+<div class="search-card">
 
-<h3>Track Your Parcel</h3>
+    <h2>Track Your Parcel</h2>
 
-<input type="text" id="awb" placeholder="Enter AWB Number">
+    <input
+        type="text"
+        id="awb"
+        placeholder="Enter AWB Number">
 
-<br><br>
-
-<button onclick="trackParcel()">TRACK NOW</button>
-
-<p id="result"></p>
+    <button onclick="trackParcel()">
+        🔍 Track Parcel
+    </button>
 
 </div>
+
+<div id="result"></div>
+
+<footer>
+
+    © 2026 SS Herbal India
+
+</footer>
 
 <script src="script.js"></script>
 
