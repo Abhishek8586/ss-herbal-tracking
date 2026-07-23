@@ -16,9 +16,20 @@ async function trackParcel() {
         const response = await fetch("https://script.google.com/macros/s/AKfycbwOs4bKMnR-6tPvdq0eTQMW0EFCpNS9kQhoMHtRlPo2-clai-f2R8AmcgtXUOLPuQiOeQ/exec?awb=" + encodeURIComponent(awb));
 
         const data = await response.json();
-        data.lastUpdate = data.lastUpdate ? data.lastUpdate.split("T")[0] : "";
-data.expectedDelivery = data.expectedDelivery ? data.expectedDelivery.split("T")[0] : "";
+function formatDate(dateString) {
+    if (!dateString) return "";
 
+    const d = new Date(dateString);
+
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+
+    return `${day}-${month}-${year}`;
+}
+
+data.lastUpdate = formatDate(data.lastUpdate);
+data.expectedDelivery = formatDate(data.expectedDelivery);
         if (data.error) {
 
             result.innerHTML = "<span style='color:red'>AWB Not Found</span>";
