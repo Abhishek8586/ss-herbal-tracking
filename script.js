@@ -25,21 +25,38 @@ async function trackParcel() {
 
             result.innerHTML = `
                 <div style="text-align:left;margin-top:20px">
-                <b>AWB :</b> ${data.awb}<br><br>
+                <div class="tracking-card">
 
-                <b>Customer :</b> ${data.customer}<br><br>
+<h2>📦 SS Herbal India Tracking</h2>
 
-                <b>Mobile :</b> ${data.mobile}<br><br>
+<table class="tracking-table">
 
-                <b>Courier :</b> ${data.courier}<br><br>
+<tr><td><b>AWB</b></td><td>${data.awb}</td></tr>
 
-                <b>Status :</b>
-                <span style="color:green;font-weight:bold">
-                ${data.status}
-                </span><br><br>
+<tr><td><b>Order ID</b></td><td>${data.orderId}</td></tr>
 
-                <b>Last Update :</b> ${data.lastUpdate}
-                </div>
+<tr><td><b>Customer Name</b></td><td>${data.customer}</td></tr>
+
+<tr><td><b>Mobile</b></td><td>${data.mobile}</td></tr>
+
+<tr><td><b>Product Name</b></td><td>${data.product}</td></tr>
+
+<tr><td><b>Amount</b></td><td>₹ ${data.amount}</td></tr>
+
+<tr><td><b>Payment Mode</b></td><td>${data.payment}</td></tr>
+
+<tr>
+<td><b>Status</b></td>
+<td><span class="status-badge">${data.status}</span></td>
+</tr>
+
+<tr><td><b>Last Update</b></td><td>${data.lastUpdate}</td></tr>
+
+<tr><td><b>Expected Delivery</b></td><td>${data.expectedDelivery}</td></tr>
+
+</table>
+
+</div>
             `;
 
         }
