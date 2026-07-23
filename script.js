@@ -16,6 +16,8 @@ async function trackParcel() {
         const response = await fetch("https://script.google.com/macros/s/AKfycbwOs4bKMnR-6tPvdq0eTQMW0EFCpNS9kQhoMHtRlPo2-clai-f2R8AmcgtXUOLPuQiOeQ/exec?awb=" + encodeURIComponent(awb));
 
         const data = await response.json();
+        data.lastUpdate = data.lastUpdate ? data.lastUpdate.split("T")[0] : "";
+data.expectedDelivery = data.expectedDelivery ? data.expectedDelivery.split("T")[0] : "";
 
         if (data.error) {
 
